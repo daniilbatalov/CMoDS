@@ -6,6 +6,7 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
     QVector<QString> abc;
     abc.append("абвгдеёжзийклмнопрстуфхцчшщъыьэюя");
     abc.append("АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ");
@@ -23,7 +24,6 @@ MainWindow::~MainWindow()
     delete a;
     delete p;
 }
-
 
 void MainWindow::on_aom_key_clicked()
 {
@@ -44,7 +44,6 @@ void MainWindow::on_aom_key_clicked()
         this->ui->aem_le->setText(res);
     }
 }
-
 
 void MainWindow::on_aem_key_clicked()
 {
@@ -70,30 +69,25 @@ void MainWindow::on_aom_ck_clicked()
     ui->aom_le->clear();
 }
 
-
 void MainWindow::on_aem_ck_clicked()
 {
     ui->aem_le->clear();
 }
-
 
 void MainWindow::on_com_ck_clicked()
 {
     ui->com_le->clear();
 }
 
-
 void MainWindow::on_ck_ck_clicked()
 {
     ui->ck_le->clear();
 }
 
-
 void MainWindow::on_cem_ck_clicked()
 {
     ui->cem_le->clear();
 }
-
 
 void MainWindow::on_com_key_clicked()
 {
@@ -130,7 +124,6 @@ void MainWindow::on_com_key_clicked()
     }
 }
 
-
 void MainWindow::on_cem_key_clicked()
 {
     if (this->ui->cem_le->text().isEmpty())
@@ -166,18 +159,15 @@ void MainWindow::on_cem_key_clicked()
     }
 }
 
-
 void MainWindow::on_rom_ck_clicked()
 {
     this->ui->rom_le->clear();
 }
 
-
 void MainWindow::on_rk_ck_clicked()
 {
     this->ui->rk_le->clear();
 }
-
 
 void MainWindow::on_rem_ck_clicked()
 {
@@ -228,6 +218,7 @@ ParsedPerm MainWindow::checkPermutationSyntax(QString perm, QString message)
             return ParsedPerm(OK, res);
     }
 }
+
 void MainWindow::on_rom_key_clicked()
 {
     if (this->ui->rom_le->text().isEmpty())
@@ -273,7 +264,6 @@ void MainWindow::on_rk_key_clicked()
         p->swap();
     }
 }
-
 
 void MainWindow::on_rem_key_clicked()
 {
