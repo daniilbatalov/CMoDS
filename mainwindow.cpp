@@ -1,6 +1,12 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
+int euclidean_remainder(int a, int b)
+{
+  int r = a % b;
+  return r >= 0 ? r : r + std::abs(b);
+}
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -12,7 +18,7 @@ MainWindow::MainWindow(QWidget *parent)
     abc.append("АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ");
     abc.append("abcdefghijklmnopqrstuvwxyz");
     abc.append("ABCDEFGHIJKLMNOPQRSTUVWXYZ");
-    abc.append(" .,");
+    abc.append(" .,\n");
 
     a = new SubCipher(abc);
 
@@ -28,39 +34,39 @@ MainWindow::~MainWindow()
 void MainWindow::on_aom_key_clicked()
 {
 
-    if (this->ui->aom_le->text().isEmpty())
+    if (this->ui->aom_le->toPlainText().isEmpty())
     {
         QMessageBox::warning(this, "Ошибка", "Исходное сообщение не может быть пустым!");
     }
     else
     {
-        QString om = this->ui->aom_le->text();
+        QString om = this->ui->aom_le->toPlainText();
         QString::iterator it = om.begin();
         QString res;
         for (; it != om.end(); ++it)
         {
             res += this->a->encrypt((*it), [](int i, int n, int) {return n - i - 1;}, 0);
         }
-        this->ui->aem_le->setText(res);
+        this->ui->aem_le->setPlainText(res);
     }
 }
 
 void MainWindow::on_aem_key_clicked()
 {
-    if (this->ui->aem_le->text().isEmpty())
+    if (this->ui->aem_le->toPlainText().isEmpty())
     {
         QMessageBox::warning(this, "Ошибка", "Зашифрованное сообщение не может быть пустым!");
     }
     else
     {
-        QString om = this->ui->aem_le->text();
+        QString om = this->ui->aem_le->toPlainText();
         QString::iterator it = om.begin();
         QString res;
         for (; it != om.end(); ++it)
         {
             res += this->a->encrypt((*it), [](int i, int n, int) {return n - i - 1;}, 0);
         }
-        this->ui->aom_le->setText(res);
+        this->ui->aom_le->setPlainText(res);
     }
 }
 
@@ -91,7 +97,7 @@ void MainWindow::on_cem_ck_clicked()
 
 void MainWindow::on_com_key_clicked()
 {
-    if (this->ui->com_le->text().isEmpty())
+    if (this->ui->com_le->toPlainText().isEmpty())
     {
         QMessageBox::warning(this, "Ошибка", "Зашифрованное сообщение не может быть пустым!");
     }
@@ -106,19 +112,19 @@ void MainWindow::on_com_key_clicked()
             static QRegularExpression re("\\d*");
             if (re.match(this->ui->ck_le->text()).capturedLength() != this->ui->ck_le->text().length())
             {
-                QMessageBox::warning(this, "Ошибка", "Сдвиг должен быть числом!");
+                QMessageBox::warning(this, "Ошибка", "Сдвиг должен быть неотрицательным числом!");
             }
             else
             {
-                QString om = this->ui->com_le->text();
+                QString om = this->ui->com_le->toPlainText();
                 int s = this->ui->ck_le->text().toInt();
                 QString::iterator it = om.begin();
                 QString res;
                 for (; it != om.end(); ++it)
                 {
-                    res += this->a->encrypt((*it), [](int i, int n, int s) {return ((i + s) % n);}, s);
+                    res += this->a->encrypt((*it), [](int i, int n, int s) {return (euclidean_remainder(i + s, n));}, s);
                 }
-                this->ui->cem_le->setText(res);
+                this->ui->cem_le->setPlainText(res);
             }
         }
     }
@@ -126,7 +132,7 @@ void MainWindow::on_com_key_clicked()
 
 void MainWindow::on_cem_key_clicked()
 {
-    if (this->ui->cem_le->text().isEmpty())
+    if (this->ui->cem_le->toPlainText().isEmpty())
     {
         QMessageBox::warning(this, "Ошибка", "Открытое сообщение не может быть пустым!");
     }
@@ -141,19 +147,19 @@ void MainWindow::on_cem_key_clicked()
             static QRegularExpression re("\\d*");
             if (re.match(this->ui->ck_le->text()).capturedLength() != this->ui->ck_le->text().length())
             {
-                QMessageBox::warning(this, "Ошибка", "Сдвиг должен быть числом!");
+                QMessageBox::warning(this, "Ошибка", "Сдвиг должен быть неотрицательным числом!");
             }
             else
             {
-                QString em = this->ui->cem_le->text();
+                QString em = this->ui->cem_le->toPlainText();
                 int s = this->ui->ck_le->text().toInt();
                 QString::iterator it = em.begin();
                 QString res;
                 for (; it != em.end(); ++it)
                 {
-                    res += this->a->encrypt((*it), [](int i, int n, int s) {return ((i - s) % n);}, s);
+                    res += this->a->encrypt((*it), [](int i, int n, int s) {return (euclidean_remainder(i - s, n));}, s);
                 }
-                this->ui->com_le->setText(res);
+                this->ui->com_le->setPlainText(res);
             }
         }
     }
@@ -221,7 +227,7 @@ ParsedPerm MainWindow::checkPermutationSyntax(QString perm, QString message)
 
 void MainWindow::on_rom_key_clicked()
 {
-    if (this->ui->rom_le->text().isEmpty())
+    if (this->ui->rom_le->toPlainText().isEmpty())
     {
         QMessageBox::warning(this, "Ошибка", "Открытое сообщение не может быть пустым!");
     }
@@ -231,7 +237,7 @@ void MainWindow::on_rom_key_clicked()
     }
     else
     {
-        ParsedPerm res = checkPermutationSyntax(this->ui->rk_le->text(), this->ui->rom_le->text());
+        ParsedPerm res = checkPermutationSyntax(this->ui->rk_le->text(), this->ui->rom_le->toPlainText());
         if (res.result == BadSyntax)
         {
             QMessageBox::warning(this, "Ошибка", "Неправильный синтаксис перестановки!");
@@ -247,7 +253,7 @@ void MainWindow::on_rom_key_clicked()
         else if (res.result == OK)
         {
             p = new Perms(res);
-            this->ui->rem_le->setText(p->encrypt(this->ui->rom_le->text()));
+            this->ui->rem_le->setPlainText(p->encrypt(this->ui->rom_le->toPlainText()));
         }
     }
 }
@@ -267,7 +273,7 @@ void MainWindow::on_rk_key_clicked()
 
 void MainWindow::on_rem_key_clicked()
 {
-    if (this->ui->rem_le->text().isEmpty())
+    if (this->ui->rem_le->toPlainText().isEmpty())
     {
         QMessageBox::warning(this, "Ошибка", "Зашифрованное сообщение не может быть пустым!");
     }
@@ -277,7 +283,7 @@ void MainWindow::on_rem_key_clicked()
     }
     else
     {
-        ParsedPerm res = checkPermutationSyntax(this->ui->rk_le->text(), this->ui->rem_le->text());
+        ParsedPerm res = checkPermutationSyntax(this->ui->rk_le->text(), this->ui->rem_le->toPlainText());
         if (res.result == BadSyntax)
         {
             QMessageBox::warning(this, "Ошибка", "Неправильный синтаксис перестановки!");
@@ -293,7 +299,7 @@ void MainWindow::on_rem_key_clicked()
         else if (res.result == OK)
         {
             p = new Perms(res);
-            this->ui->rom_le->setText(p->decrypt(this->ui->rem_le->text()));
+            this->ui->rom_le->setPlainText(p->decrypt(this->ui->rem_le->toPlainText()));
         }
     }
 }
