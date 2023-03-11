@@ -8,6 +8,7 @@
 
 #include "subcipher.h"
 #include "perms.h"
+#include "vigenere.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -31,7 +32,6 @@ private slots:
 
     void on_aem_ck_clicked();
 
-
     void on_com_ck_clicked();
 
     void on_ck_ck_clicked();
@@ -42,7 +42,6 @@ private slots:
 
     void on_cem_key_clicked();
 
-
     void on_rom_ck_clicked();
 
     void on_rk_ck_clicked();
@@ -51,16 +50,34 @@ private slots:
 
     void on_rom_key_clicked();
 
-
-
     void on_rk_key_clicked();
 
     void on_rem_key_clicked();
 
+    void on_rot0_rb_clicked();
+
+    void on_rot1_rb_clicked();
+
+    void on_vom_ck_clicked();
+
+    void on_vk_ck_clicked();
+
+    void on_vem_ck_clicked();
+
+    void on_vom_key_clicked();
+
+    void on_greedy_rb_clicked();
+
+    void on_lazy_rb_clicked();
+
+    void on_vem_key_clicked();
+
 private:
     Ui::MainWindow *ui;
     SubCipher *a;
-    ParsedPerm checkPermutationSyntax(QString perm, QString message);
+    ParsedPerm checkPermutationSyntax(QString const &perm, QString const &message);
     Perms *p = nullptr;
+    Vigenere *v;
+
 };
 #endif // MAINWINDOW_H

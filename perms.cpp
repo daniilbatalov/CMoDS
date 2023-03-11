@@ -1,6 +1,6 @@
 #include "perms.h"
 
-ParsedPerm::ParsedPerm(PermType r, QVector<QVector<int>> p)
+ParsedPerm::ParsedPerm(PermType r, QVector<QVector<int>> const &p)
 {
     this->result = r;
     this->parsed = p;
@@ -11,14 +11,13 @@ ParsedPerm::ParsedPerm()
 
 }
 
-
-Perms::Perms(ParsedPerm p)
+Perms::Perms(ParsedPerm const &p)
 {
     this->perm = p;
     this->rev = getReverse(p);
 }
 
-QString Perms::encrypt(QString message)
+QString Perms::encrypt(QString const &message)
 {
     QVector<QVector<int>>::iterator it = this->perm.parsed.begin();
     int pos = 0;
@@ -32,7 +31,7 @@ QString Perms::encrypt(QString message)
     return res;
 }
 
-QString Perms::decrypt(QString message)
+QString Perms::decrypt(QString const &message)
 {
     QVector<QVector<int>>::iterator it = this->rev.parsed.begin();
     int pos = 0;
@@ -46,10 +45,10 @@ QString Perms::decrypt(QString message)
     return res;
 }
 
-ParsedPerm Perms::getReverse(ParsedPerm p)
+ParsedPerm Perms::getReverse(ParsedPerm const &p)
 {
     QVector<QVector<int>> res;
-    QVector<QVector<int>>::iterator it = p.parsed.begin();
+    QVector<QVector<int>>::const_iterator it = p.parsed.begin();
     for (; it != p.parsed.end(); it++)
     {
         QVector<int> subres = QVector<int>((*it).length());
@@ -63,10 +62,10 @@ ParsedPerm Perms::getReverse(ParsedPerm p)
     return ParsedPerm(p.result, res);
 }
 
-QString Perms::applyOnePerm(QString message, QVector<int> perm)
+QString Perms::applyOnePerm(QString const &message, QVector<int> const &perm)
 {
     QString res = "";
-    QVector<int>::iterator it = perm.begin();
+    QVector<int>::const_iterator it = perm.begin();
     for (; it != perm.end(); it++)
     {
         res += message.at((*it) - 1);

@@ -16,7 +16,7 @@ struct ParsedPerm
 {
     PermType result;
     QVector<QVector<int>> parsed;
-    ParsedPerm(PermType, QVector<QVector<int>>);
+    ParsedPerm(PermType, QVector<QVector<int>> const&);
     ParsedPerm();
 };
 
@@ -25,9 +25,9 @@ struct ParsedPerm
 class Perms
 {
 public:
-    Perms(ParsedPerm);
-    QString encrypt(QString);
-    QString decrypt(QString);
+    Perms(ParsedPerm const&);
+    QString encrypt(QString const&);
+    QString decrypt(QString const&);
     QString revToQString();
     void swap();
 
@@ -35,8 +35,8 @@ public:
 private:
     ParsedPerm perm;
     ParsedPerm rev;
-    ParsedPerm getReverse(ParsedPerm);
-    QString applyOnePerm(QString, QVector<int>);
+    ParsedPerm getReverse(ParsedPerm const&);
+    QString applyOnePerm(QString const&, QVector<int> const&);
 
 
 

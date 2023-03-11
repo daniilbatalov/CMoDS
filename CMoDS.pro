@@ -9,15 +9,21 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    aux/math_aux.cpp \
     main.cpp \
     mainwindow.cpp \
     perms.cpp \
-    subcipher.cpp
+    playfair.cpp \
+    subcipher.cpp \
+    vigenere.cpp
 
 HEADERS += \
+    aux/math_aux.h \
     mainwindow.h \
     perms.h \
-    subcipher.h
+    playfair.h \
+    subcipher.h \
+    vigenere.h
 
 FORMS += \
     mainwindow.ui
