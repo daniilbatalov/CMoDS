@@ -11,5 +11,13 @@ void test_subcipher::testConstructor()
     QCOMPARE(s->getAlphabets(), t);
 }
 
+void test_subcipher::testEncrypt()
+{
+    QCOMPARE(s->encrypt("A", [](int i, int n, int) {return n - i - 1;}, 0), "Z");
+    QCOMPARE(s->encrypt("А", [](int i, int n, int) {return n - i - 1;}, 0), "Я");
+    QCOMPARE(s->encrypt(".", [](int i, int n, int) {return n - i - 1;}, 0), ".");
+}
+
+
 QTEST_GUILESS_MAIN(test_subcipher)
 

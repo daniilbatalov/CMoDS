@@ -16,6 +16,8 @@ public:
 
 private slots:
     void testConstructor();
+    void testEncrypt();
+
 private:
     SubCipher *s;
 };
