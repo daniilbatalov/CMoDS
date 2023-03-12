@@ -3,38 +3,41 @@
 
 #include <QVector>
 #include <QString>
-#include <QMap>
+#include <QPair>
+#include <QRegularExpression>
+
 #include "aux/math_aux.h"
 
-enum Alphabet
+namespace Playfair
 {
-    INVALID = -1,
-    EN,
-    RU
-};
 
-enum Size
-{
-    INVALID = -1,
-    EN = 5,
-    RU = 6
-};
-
-class Playfair
-{
-private:
-    QVector<QString> tableRu;
-    QVector<QString> tableEn;
-    const QString alphabetEn = "ABCDEFGHIKLMNOPQRSTUVWXYZ";
-    const QString alphabetRu = "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ-.,";
-    Size currentSize = INVALID;
-    Alphabet currentAbc = INVALID;
+    enum class Alphabet
+    {
+        INVALID = -1,
+        EN = 5,
+        RU
+    };
 
 
-public:
-    Playfair();
-    void generateTable(QString const &key);
+    class Playfair
+    {
+    private:
+        QVector<QString> table;
+        const QString alphabetEn = "ABCDEFGHIKLMNOPQRSTUVWXYZ";
+        const QString alphabetRu = "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ-.,";
+        Alphabet currentAbc = Alphabet::INVALID;
+        QString encryptPair(const QString &pair, int func(int));
+        QPair<qsizetype, qsizetype> find(const QChar ch);
+        QVector<QString> transformString(const QString &message, QVector<QString> &acc);
 
-};
 
+    public:
+        Playfair();
+        void generateTable(const QString &key);
+        void setCurrentAbc(Alphabet a);
+        QString encrypt(const QString &message);
+        QString decrypt(const QString &message);
+
+    };
+}
 #endif // PLAYFAIR_H
