@@ -79,6 +79,12 @@ private slots:
 
     void on_pem_key_clicked();
 
+    void on_pom_ck_clicked();
+
+    void on_pk_ck_clicked();
+
+    void on_pem_ck_clicked();
+
 private:
     Ui::MainWindow *ui;
     SubCipher *a;

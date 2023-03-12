@@ -562,3 +562,21 @@ void MainWindow::on_pem_key_clicked()
     }
 }
 
+
+void MainWindow::on_pom_ck_clicked()
+{
+    this->ui->pom_le->clear();
+}
+
+
+void MainWindow::on_pk_ck_clicked()
+{
+    this->ui->pk_le->clear();
+}
+
+
+void MainWindow::on_pem_ck_clicked()
+{
+    this->ui->pem_le->clear();
+}
+
