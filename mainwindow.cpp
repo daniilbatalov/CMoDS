@@ -15,7 +15,7 @@ MainWindow::MainWindow(QWidget *parent)
     abc.append("abcdefghijklmnopqrstuvwxyz");
     abc.append("ABCDEFGHIJKLMNOPQRSTUVWXYZ");
 
-    v = new Vigenere(abc);
+    v = new Vigenere::Vigenere(abc);
 
     abc.append(" .,\n");
 
@@ -308,13 +308,13 @@ void MainWindow::on_rem_key_clicked()
 
 void MainWindow::on_rot0_rb_clicked()
 {
-    this->v->setRot(ROT_0);
+    this->v->setRot(Vigenere::Rot::ROT_0);
 }
 
 
 void MainWindow::on_rot1_rb_clicked()
 {
-    this->v->setRot(ROT_1);
+    this->v->setRot(Vigenere::Rot::ROT_1);
 }
 
 
@@ -373,11 +373,11 @@ void MainWindow::on_vom_key_clicked()
             {
                 if (checkRes.at(i).first && checkRes.at(i).second)
                 {
-                    this->v->setCurrentAbc(static_cast<Alphabet> (i));
+                    this->v->setCurrentAbc(static_cast<Vigenere::Alphabet>(i));
                 }
             }
 
-            if (this->v->getCurrentAbc() == INVALID)
+            if (this->v->getCurrentAbc() == Vigenere::Alphabet::INVALID)
             {
                 QMessageBox::warning(this, "Ошибка", "Алфавиты исходного текста и ключа не совпадают!");
             }
@@ -393,13 +393,13 @@ void MainWindow::on_vom_key_clicked()
 
 void MainWindow::on_greedy_rb_clicked()
 {
-    this->v->setKeyMode(GREEDY);
+    this->v->setKeyMode(Vigenere::KeyMode::GREEDY);
 }
 
 
 void MainWindow::on_lazy_rb_clicked()
 {
-    this->v->setKeyMode(LAZY);
+    this->v->setKeyMode(Vigenere::KeyMode::LAZY);
 }
 
 
@@ -440,11 +440,11 @@ void MainWindow::on_vem_key_clicked()
             {
                 if (checkRes.at(i).first && checkRes.at(i).second)
                 {
-                    this->v->setCurrentAbc(static_cast<Alphabet> (i));
+                    this->v->setCurrentAbc(static_cast<Vigenere::Alphabet> (i));
                 }
             }
 
-            if (this->v->getCurrentAbc() == INVALID)
+            if (this->v->getCurrentAbc() == Vigenere::Alphabet::INVALID)
             {
                 QMessageBox::warning(this, "Ошибка", "Алфавиты исходного текста и ключа не совпадают!");
             }
@@ -456,5 +456,127 @@ void MainWindow::on_vem_key_clicked()
         }
     }
 
+}
+
+
+void MainWindow::on_pom_key_clicked()
+{
+    QString text = this->ui->pom_le->toPlainText().simplified().replace(" ", "").toUpper();
+    QString key = this->ui->pk_le->toPlainText().simplified().replace(" ", "").toUpper();
+    if (text.isEmpty())
+    {
+        QMessageBox::warning(this, "Ошибка", "Исходное сообщение не может быть пустым!");
+    }
+    else
+    {
+        if (key.isEmpty())
+        {
+            QMessageBox::warning(this, "Ошибка", "Ключ не может быть пустым!");
+        }
+        else
+        {
+            static QRegularExpression ru_uc(R"([ËА-Я\-.,]+)", QRegularExpression::UseUnicodePropertiesOption | QRegularExpression::CaseInsensitiveOption);
+            static QRegularExpression en_uc(R"([A-Z]+)", QRegularExpression::CaseInsensitiveOption);
+
+            bool fullMatchTextRuUc = ru_uc.match(text).capturedLength() == text.length();
+            bool fullMatchTextEnUc = en_uc.match(text).capturedLength() == text.length();
+
+            bool fullMatchKeyRuUc = ru_uc.match(key).capturedLength() == key.length();
+            bool fullMatchKeyEnUc = en_uc.match(key).capturedLength() == key.length();
+
+            if ((fullMatchKeyEnUc && fullMatchTextRuUc) || (fullMatchKeyRuUc && fullMatchTextEnUc))
+            {
+                QMessageBox::warning(this, "Ошибка", "Алфавиты ключа и сообщения не совпадают!");
+            }
+            else if ((fullMatchKeyEnUc && fullMatchTextEnUc) || (fullMatchKeyRuUc && fullMatchTextRuUc))
+            {
+                if (fullMatchKeyEnUc)
+                {
+                    this->pf.setCurrentAbc(Playfair::Alphabet::EN);
+                }
+                else
+                {
+                    this->pf.setCurrentAbc(Playfair::Alphabet::RU);
+                }
+                this->pf.generateTable(key);
+                this->ui->pem_le->setPlainText(this->pf.encrypt(text));
+            }
+            else
+            {
+                QMessageBox::warning(this, "Ошибка", "Недопустимые символы в ключе и/или в сообщении!");
+            }
+
+        }
+    }
+
+}
+
+void MainWindow::on_pem_key_clicked()
+{
+    QString text = this->ui->pem_le->toPlainText().simplified().replace(" ", "").toUpper();
+    QString key = this->ui->pk_le->toPlainText().simplified().replace(" ", "").toUpper();
+    if (text.isEmpty())
+    {
+        QMessageBox::warning(this, "Ошибка", "Зашифрованное сообщение не может быть пустым!");
+    }
+    else
+    {
+        if (key.isEmpty())
+        {
+            QMessageBox::warning(this, "Ошибка", "Ключ не может быть пустым!");
+        }
+        else
+        {
+            static QRegularExpression ru_uc(R"([ЁА-Я\-.,]+)", QRegularExpression::UseUnicodePropertiesOption | QRegularExpression::CaseInsensitiveOption);
+            static QRegularExpression en_uc(R"([A-Z]+)", QRegularExpression::CaseInsensitiveOption);
+
+            bool fullMatchTextRuUc = ru_uc.match(text).capturedLength() == text.length();
+            bool fullMatchTextEnUc = en_uc.match(text).capturedLength() == text.length();
+
+            bool fullMatchKeyRuUc = ru_uc.match(key).capturedLength() == key.length();
+            bool fullMatchKeyEnUc = en_uc.match(key).capturedLength() == key.length();
+
+            if ((fullMatchKeyEnUc && fullMatchTextRuUc) || (fullMatchKeyRuUc && fullMatchTextEnUc))
+            {
+                QMessageBox::warning(this, "Ошибка", "Алфавиты ключа и сообщения не совпадают!");
+            }
+            else if ((fullMatchKeyEnUc && fullMatchTextEnUc) || (fullMatchKeyRuUc && fullMatchTextRuUc))
+            {
+                if (fullMatchKeyEnUc)
+                {
+                    this->pf.setCurrentAbc(Playfair::Alphabet::EN);
+                }
+                else
+                {
+                    this->pf.setCurrentAbc(Playfair::Alphabet::RU);
+                }
+                this->pf.generateTable(key);
+                this->ui->pom_le->setPlainText(this->pf.decrypt(text));
+            }
+            else
+            {
+                QMessageBox::warning(this, "Ошибка", "Недопустимые символы в ключе и/или в сообщении!");
+            }
+
+        }
+    }
+}
+
+
+void MainWindow::on_pom_ck_clicked()
+{
+    this->ui->pom_le->clear();
+}
+
+
+void MainWindow::on_pk_ck_clicked()
+{
+    this->ui->pk_le->clear();
+}
+
+
+void MainWindow::on_pem_ck_clicked()
+{
+    this->ui->pem_le->clear();
 }
 

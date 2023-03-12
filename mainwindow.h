@@ -9,6 +9,8 @@
 #include "subcipher.h"
 #include "perms.h"
 #include "vigenere.h"
+#include "playfair.h"
+
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -72,12 +74,24 @@ private slots:
 
     void on_vem_key_clicked();
 
+    void on_pom_key_clicked();
+
+
+    void on_pem_key_clicked();
+
+    void on_pom_ck_clicked();
+
+    void on_pk_ck_clicked();
+
+    void on_pem_ck_clicked();
+
 private:
     Ui::MainWindow *ui;
     SubCipher *a;
     ParsedPerm checkPermutationSyntax(QString const &perm, QString const &message);
     Perms *p = nullptr;
-    Vigenere *v;
+    Vigenere::Vigenere *v;
+    Playfair::Playfair pf;
 
 };
 #endif // MAINWINDOW_H
