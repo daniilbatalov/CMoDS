@@ -4,7 +4,7 @@ namespace Playfair
 {
 
 
-    QString Playfair::encryptPair(const QString &pair, int func(int))
+    QString Playfair::encryptPair(const QString &pair, qsizetype func(qsizetype))
     {
         QString res = "";
         QPair<qsizetype, qsizetype> first = this->find(pair.at(0));
@@ -12,16 +12,16 @@ namespace Playfair
 
         if (first.first == second.first)
         {
-            qsizetype new_first_x = MathAux::euclidean_remainder(func(first.second), static_cast<int>(this->currentAbc));
-            qsizetype new_second_x = MathAux::euclidean_remainder(func(second.second), static_cast<int>(this->currentAbc));
+            qsizetype new_first_x = MathAux::euclidean_remainder<qsizetype>(func(first.second), static_cast<qsizetype>(this->currentAbc));
+            qsizetype new_second_x = MathAux::euclidean_remainder<qsizetype>(func(second.second), static_cast<qsizetype>(this->currentAbc));
             res.append(this->table.at(first.first).at(new_first_x));
             res.append(this->table.at(second.first).at(new_second_x));
             return res;
         }
         else if (first.second == second.second)
         {
-            qsizetype new_first_y = MathAux::euclidean_remainder(func(first.first), static_cast<int>(this->currentAbc));
-            qsizetype new_second_y = MathAux::euclidean_remainder(func(second.first), static_cast<int>(this->currentAbc));
+            qsizetype new_first_y = MathAux::euclidean_remainder<qsizetype>(func(first.first), static_cast<qsizetype>(this->currentAbc));
+            qsizetype new_second_y = MathAux::euclidean_remainder<qsizetype>(func(second.first), static_cast<qsizetype>(this->currentAbc));
             res.append(this->table.at(new_first_y).at(first.second));
             res.append(this->table.at(new_second_y).at(second.second));
             return res;
@@ -129,7 +129,7 @@ namespace Playfair
 
         for (QVector<QString>::iterator it = tmp.begin(); it != tmp.end(); ++it)
         {
-            res.append(this->encryptPair((*it), [](int x){return x + 1;}));
+            res.append(this->encryptPair((*it), [](qsizetype x){return x + 1;}));
         }
         return res;
     }
@@ -141,7 +141,7 @@ namespace Playfair
 
         for (QVector<QString>::iterator it = tmp.begin(); it != tmp.end(); ++it)
         {
-            res.append(this->encryptPair((*it), [](int x){return x - 1;}));
+            res.append(this->encryptPair((*it), [](qsizetype x){return x - 1;}));
         }
         return res;
     }

@@ -26,7 +26,7 @@ namespace Playfair
         const QString alphabetEn = "ABCDEFGHIKLMNOPQRSTUVWXYZ";
         const QString alphabetRu = "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ-.,";
         Alphabet currentAbc = Alphabet::INVALID;
-        QString encryptPair(const QString &pair, int func(int));
+        QString encryptPair(const QString &pair, qsizetype func(qsizetype));
         QPair<qsizetype, qsizetype> find(const QChar ch);
         QVector<QString> transformString(const QString &message, QVector<QString> &acc);
 
