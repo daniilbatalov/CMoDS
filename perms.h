@@ -2,6 +2,7 @@
 #define PERMS_H
 
 #include <QVector>
+#include <QRegularExpression>
 
 enum PermType
 {
@@ -16,8 +17,9 @@ struct ParsedPerm
 {
     PermType result;
     QVector<QVector<int>> parsed;
-    ParsedPerm(PermType, QVector<QVector<int>> const&);
+    ParsedPerm(PermType, const QVector<QVector<int>> &);
     ParsedPerm();
+    friend bool operator==(const ParsedPerm& lhs, const ParsedPerm& rhs);
 };
 
 
@@ -25,18 +27,21 @@ struct ParsedPerm
 class Perms
 {
 public:
-    Perms(ParsedPerm const&);
-    QString encrypt(QString const&);
-    QString decrypt(QString const&);
+    Perms(const ParsedPerm &);
+    QString encrypt(const QString &);
+    QString decrypt(const QString &);
     QString revToQString();
     void swap();
+    ParsedPerm getPerm();
+    ParsedPerm getRevPerm();
+    static ParsedPerm checkPermutationSyntax(const QString &perm, const QString &message);
 
 
 private:
     ParsedPerm perm;
     ParsedPerm rev;
-    ParsedPerm getReverse(ParsedPerm const&);
-    QString applyOnePerm(QString const&, QVector<int> const&);
+    ParsedPerm getReverse(const ParsedPerm&);
+    QString applyOnePerm(const QString &, const QVector<int> &);
 
 
 

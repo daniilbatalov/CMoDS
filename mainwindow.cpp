@@ -180,50 +180,7 @@ void MainWindow::on_rem_ck_clicked()
     this->ui->rem_le->clear();
 }
 
-ParsedPerm MainWindow::checkPermutationSyntax(QString const &perm, QString const &message)
-{
-    static QRegularExpression re("(\\((\\d+\\s)*\\d+\\))+");
-    if (re.match(perm).capturedLength() != perm.length())
-    {
-        return ParsedPerm(BadSyntax, QVector<QVector<int>>());
-    }
-    else
-    {
-        QVector<QVector<int>> res;
-        QVector<QString> tokenized = perm.mid(1, perm.length() - 2).split(")(");
-        QVector<QString>::iterator it = tokenized.begin();
-        int count = 0;
-        for(; it != tokenized.end(); it++)
-        {
-            QVector<int> result;
-            QVector<QString> r = (*it).split(" ");
-            QVector<bool> visited = QVector<bool>(r.length());
-            QVector<QString>::iterator i = r.begin();
-            for(; i != r.end(); i++)
-            {
-                if ((*i).toInt() > r.length() || (*i).toInt() < 1)
-                {
-                    return ParsedPerm(BadPerm, QVector<QVector<int>>());
-                }
-                else
-                {
-                    result.append((*i).toInt());
-                    visited[(*i).toInt() - 1] = true;
-                    count++;
-                }
-            }
-            if (visited.contains(false))
-                return ParsedPerm(BadPerm, QVector<QVector<int>>());
-            else
-                res.append(result);
 
-        }
-        if (count > message.length())
-            return ParsedPerm(LongPerm, res);
-        else
-            return ParsedPerm(OK, res);
-    }
-}
 
 void MainWindow::on_rom_key_clicked()
 {
@@ -237,7 +194,7 @@ void MainWindow::on_rom_key_clicked()
     }
     else
     {
-        ParsedPerm res = checkPermutationSyntax(this->ui->rk_le->text(), this->ui->rom_le->toPlainText());
+        ParsedPerm res = Perms::checkPermutationSyntax(this->ui->rk_le->text(), this->ui->rom_le->toPlainText());
         if (res.result == BadSyntax)
         {
             QMessageBox::warning(this, "Ошибка", "Неправильный синтаксис перестановки!");
@@ -283,7 +240,7 @@ void MainWindow::on_rem_key_clicked()
     }
     else
     {
-        ParsedPerm res = checkPermutationSyntax(this->ui->rk_le->text(), this->ui->rem_le->toPlainText());
+        ParsedPerm res = Perms::checkPermutationSyntax(this->ui->rk_le->text(), this->ui->rem_le->toPlainText());
         if (res.result == BadSyntax)
         {
             QMessageBox::warning(this, "Ошибка", "Неправильный синтаксис перестановки!");

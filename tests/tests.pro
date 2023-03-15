@@ -8,13 +8,17 @@ QT -= gui
 TEMPLATE = app
 
 SOURCES += \
+    test_perms.cpp \
     test_subcipher.cpp \
-    ../subcipher.cpp
+    ../subcipher.cpp \
+    ../perms.cpp
 
 
 HEADERS += \
+    test_perms.h \
     test_subcipher.h \
-    ../subcipher.h
+    ../subcipher.h \
+    ../perms.h
 
 
 

@@ -43,10 +43,10 @@ namespace Vigenere
 
     public:
         Vigenere();
-        Vigenere(QVector<QString> const &abc_value);
-        QString encrypt(QString const &message, int s_func(int, int, int));
+        Vigenere(const QVector<QString> &abc_value);
+        QString encrypt(const QString &message, int s_func(int, int, int));
         void setRot(Rot r);
-        void setKey(QString const &k);
+        void setKey(const QString &k);
         void setCurrentAbc(Alphabet c);
         void setKeyMode(KeyMode k);
         Alphabet getCurrentAbc();
