@@ -10,6 +10,7 @@ CONFIG += c++17
 
 SOURCES += \
     aux/math_aux.cpp \
+    gronsfeld.cpp \
     main.cpp \
     mainwindow.cpp \
     perms.cpp \
@@ -19,6 +20,7 @@ SOURCES += \
 
 HEADERS += \
     aux/math_aux.h \
+    gronsfeld.h \
     mainwindow.h \
     perms.h \
     playfair.h \
