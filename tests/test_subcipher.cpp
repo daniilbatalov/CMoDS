@@ -13,9 +13,9 @@ void test_subcipher::testConstructor()
 
 void test_subcipher::testEncrypt()
 {
-    QCOMPARE(s->encrypt("A", [](int i, int n, int) {return n - i - 1;}, 0), "Z");
-    QCOMPARE(s->encrypt("А", [](int i, int n, int) {return n - i - 1;}, 0), "Я");
-    QCOMPARE(s->encrypt(".", [](int i, int n, int) {return n - i - 1;}, 0), ".");
+    QCOMPARE(s->encrypt("A", [](qsizetype i, qsizetype n, qsizetype) {return n - i - 1;}, 0), "Z");
+    QCOMPARE(s->encrypt("А", [](qsizetype i, qsizetype n, qsizetype) {return n - i - 1;}, 0), "Я");
+    QCOMPARE(s->encrypt(".", [](qsizetype i, qsizetype n, qsizetype) {return n - i - 1;}, 0), ".");
 }
 
 
