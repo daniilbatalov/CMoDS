@@ -103,7 +103,6 @@ private slots:
 private:
     Ui::MainWindow *ui;
     SubCipher *a;
-    ParsedPerm checkPermutationSyntax(const QString &perm, const QString &message);
     Perms *p = nullptr;
     Vigenere::Vigenere *v;
     Playfair::Playfair pf;
