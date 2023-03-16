@@ -36,7 +36,7 @@ namespace Vigenere
     private:
         QString key;
         Rot mode = Rot::ROT_0;
-        QString expand_key(int size);
+        QString expand_key(const qsizetype size);
         QVector<QString> alphabet;
         Alphabet currentAbc = Alphabet::INVALID;
         KeyMode key_mode = KeyMode::GREEDY;
@@ -44,11 +44,11 @@ namespace Vigenere
     public:
         Vigenere();
         Vigenere(const QVector<QString> &abc_value);
-        QString encrypt(const QString &message, int s_func(int, int, int));
-        void setRot(Rot r);
+        QString encrypt(const QString &message, qsizetype s_func(qsizetype, qsizetype, qsizetype));
+        void setRot(const Rot r);
         void setKey(const QString &k);
-        void setCurrentAbc(Alphabet c);
-        void setKeyMode(KeyMode k);
+        void setCurrentAbc(const Alphabet c);
+        void setKeyMode(const KeyMode k);
         Alphabet getCurrentAbc();
 
     };

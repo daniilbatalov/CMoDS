@@ -16,6 +16,7 @@ MainWindow::MainWindow(QWidget *parent)
     abc.append("ABCDEFGHIJKLMNOPQRSTUVWXYZ");
 
     v = new Vigenere::Vigenere(abc);
+    g = new Gronsfeld::Gronsfeld(abc);
 
     abc.append(" .,\n");
 
@@ -29,6 +30,7 @@ MainWindow::~MainWindow()
     delete a;
     delete p;
     delete v;
+    delete g;
 }
 
 void MainWindow::on_aom_key_clicked()
@@ -45,7 +47,7 @@ void MainWindow::on_aom_key_clicked()
         QString res;
         for (; it != om.end(); ++it)
         {
-            res += this->a->encrypt((*it), [](int i, int n, int) {return n - i - 1;}, 0);
+            res += this->a->encrypt((*it), [](qsizetype i, qsizetype n, qsizetype) {return n - i - 1;}, 0);
         }
         this->ui->aem_le->setPlainText(res);
     }
@@ -64,7 +66,7 @@ void MainWindow::on_aem_key_clicked()
         QString res;
         for (; it != om.end(); ++it)
         {
-            res += this->a->encrypt((*it), [](int i, int n, int) {return n - i - 1;}, 0);
+            res += this->a->encrypt((*it), [](qsizetype i, qsizetype n, qsizetype) {return n - i - 1;}, 0);
         }
         this->ui->aom_le->setPlainText(res);
     }
@@ -109,7 +111,7 @@ void MainWindow::on_com_key_clicked()
         }
         else
         {
-            static QRegularExpression re("\\d*");
+            static QRegularExpression re(R"(\d*)");
             if (re.match(this->ui->ck_le->text()).capturedLength() != this->ui->ck_le->text().length())
             {
                 QMessageBox::warning(this, "Ошибка", "Сдвиг должен быть неотрицательным числом!");
@@ -122,7 +124,7 @@ void MainWindow::on_com_key_clicked()
                 QString res;
                 for (; it != om.end(); ++it)
                 {
-                    res += this->a->encrypt((*it), [](int i, int n, int s) {return (MathAux::euclidean_remainder(i + s, n));}, s);
+                    res += this->a->encrypt((*it), [](qsizetype i, qsizetype n, qsizetype s) {return (MathAux::euclidean_remainder<qsizetype>(i + s, n));}, s);
                 }
                 this->ui->cem_le->setPlainText(res);
             }
@@ -157,7 +159,7 @@ void MainWindow::on_cem_key_clicked()
                 QString res;
                 for (; it != em.end(); ++it)
                 {
-                    res += this->a->encrypt((*it), [](int i, int n, int s) {return (MathAux::euclidean_remainder(i - s, n));}, s);
+                    res += this->a->encrypt((*it), [](qsizetype i, qsizetype n, qsizetype s) {return (MathAux::euclidean_remainder<qsizetype>(i - s, n));}, s);
                 }
                 this->ui->com_le->setPlainText(res);
             }
@@ -179,7 +181,6 @@ void MainWindow::on_rem_ck_clicked()
 {
     this->ui->rem_le->clear();
 }
-
 
 
 void MainWindow::on_rom_key_clicked()
@@ -341,7 +342,7 @@ void MainWindow::on_vom_key_clicked()
             else
             {
                 this->v->setKey(key);
-                this->ui->vem_le->setPlainText(this->v->encrypt(text, [](int i, int n, int s) {return i + n + s;}));
+                this->ui->vem_le->setPlainText(this->v->encrypt(text, [](qsizetype i, qsizetype n, qsizetype s) {return i + n + s;}));
             }
         }
     }
@@ -408,7 +409,7 @@ void MainWindow::on_vem_key_clicked()
             else
             {
                 this->v->setKey(key);
-                this->ui->vom_le->setPlainText(this->v->encrypt(text, [](int i, int n, int s) {return i - n - s;}));
+                this->ui->vom_le->setPlainText(this->v->encrypt(text, [](qsizetype i, qsizetype n, qsizetype s) {return i - n - s;}));
             }
         }
     }
@@ -535,5 +536,97 @@ void MainWindow::on_pk_ck_clicked()
 void MainWindow::on_pem_ck_clicked()
 {
     this->ui->pem_le->clear();
+}
+
+
+void MainWindow::on_gom_key_clicked()
+{
+    QString text = this->ui->gom_le->toPlainText();
+    QString key = this->ui->gk_le->toPlainText();
+    if (text.isEmpty())
+    {
+        QMessageBox::warning(this, "Ошибка", "Исходное сообщение не может быть пустым!");
+    }
+    else
+    {
+        if (key.isEmpty())
+        {
+            QMessageBox::warning(this, "Ошибка", "Ключ не может быть пустым!");
+        }
+        else
+        {
+            static QRegularExpression re(R"(\d*)");
+            if (re.match(key).capturedLength() != key.length())
+            {
+                QMessageBox::warning(this, "Ошибка", "Сдвиг должен быть неотрицательным числом!");
+            }
+            else
+            {
+                this->g->setKey(key);
+                this->ui->gem_le->setPlainText(this->g->encrypt(text, [](qsizetype i, qsizetype s){return i + s;}));
+            }
+        }
+    }
+}
+
+
+void MainWindow::on_gem_key_clicked()
+{
+    QString text = this->ui->gem_le->toPlainText();
+    QString key = this->ui->gk_le->toPlainText();
+    if (text.isEmpty())
+    {
+        QMessageBox::warning(this, "Ошибка", "Исходное сообщение не может быть пустым!");
+    }
+    else
+    {
+        if (key.isEmpty())
+        {
+            QMessageBox::warning(this, "Ошибка", "Ключ не может быть пустым!");
+        }
+        else
+        {
+            static QRegularExpression re(R"(\d*)");
+            if (re.match(key).capturedLength() != key.length())
+            {
+                QMessageBox::warning(this, "Ошибка", "Сдвиг должен быть неотрицательным числом!");
+            }
+            else
+            {
+                this->g->setKey(key);
+                this->ui->gom_le->setPlainText(this->g->encrypt(text, [](qsizetype i, qsizetype s){return i - s;}));
+            }
+        }
+    }
+}
+
+
+void MainWindow::on_greedy_rb_g_clicked()
+{
+    this->g->setKeyMode(Gronsfeld::KeyMode::GREEDY);
+}
+
+
+void MainWindow::on_lazy_rb_g_clicked()
+{
+    this->g->setKeyMode(Gronsfeld::KeyMode::LAZY);
+}
+
+
+void MainWindow::on_gom_ck_clicked()
+{
+    this->ui->gom_le->clear();
+}
+
+
+void MainWindow::on_gk_ck_clicked()
+{
+    this->ui->gk_le->clear();
+}
+
+
+void MainWindow::on_gem_ck_clicked()
+{
+    this->ui->gem_le->clear();
 }
 

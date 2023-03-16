@@ -10,6 +10,7 @@
 #include "perms.h"
 #include "vigenere.h"
 #include "playfair.h"
+#include "gronsfeld.h"
 
 
 QT_BEGIN_NAMESPACE
@@ -85,12 +86,27 @@ private slots:
 
     void on_pem_ck_clicked();
 
+    void on_gom_key_clicked();
+
+    void on_gem_key_clicked();
+
+    void on_greedy_rb_g_clicked();
+
+    void on_lazy_rb_g_clicked();
+
+    void on_gom_ck_clicked();
+
+    void on_gk_ck_clicked();
+
+    void on_gem_ck_clicked();
+
 private:
     Ui::MainWindow *ui;
     SubCipher *a;
     Perms *p = nullptr;
     Vigenere::Vigenere *v;
     Playfair::Playfair pf;
+    Gronsfeld::Gronsfeld *g;
 
 };
 #endif // MAINWINDOW_H

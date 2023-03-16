@@ -5,7 +5,7 @@ SubCipher::SubCipher(QVector<QString> const &abc)
      this->alphabets = abc;
 }
 
-QString SubCipher::encrypt(QString const &message, int s_func(int, int, int), int shift)
+QString SubCipher::encrypt(QString const &message, qsizetype s_func(qsizetype, qsizetype, qsizetype), qsizetype shift)
 {
     QVector<QString>::iterator it = this->alphabets.begin();
 
@@ -13,8 +13,8 @@ QString SubCipher::encrypt(QString const &message, int s_func(int, int, int), in
     {
         if ((*it).contains(message, Qt::CaseSensitive))
         {
-            int ind = (*it).indexOf(message);
-            int n_ind = s_func(ind, (*it).length(), shift);
+            qsizetype ind = (*it).indexOf(message);
+            qsizetype n_ind = s_func(ind, (*it).length(), shift);
             return (*it)[n_ind];
         }
     }
