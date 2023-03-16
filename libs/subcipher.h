@@ -9,8 +9,9 @@ class SubCipher
 private:
     QVector<QString> alphabets;
 public:
-    SubCipher(QVector<QString> const &abc);
+    SubCipher(const QVector<QString> &abc);
     QString encrypt(QString const &message, qsizetype s_func(qsizetype, qsizetype, qsizetype), qsizetype shift = 0);
+    QVector<QString> getAlphabets();
 };
 
 #endif // SUBCIPHER_H

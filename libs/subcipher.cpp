@@ -20,3 +20,8 @@ QString SubCipher::encrypt(QString const &message, qsizetype s_func(qsizetype, q
     }
     return message;
 }
+
+QVector<QString> SubCipher::getAlphabets()
+{
+    return this->alphabets;
+}

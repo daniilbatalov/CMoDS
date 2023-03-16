@@ -103,7 +103,7 @@ private slots:
 private:
     Ui::MainWindow *ui;
     SubCipher *a;
-    Perms *p = nullptr;
+    Perms::Perms *p = nullptr;
     Vigenere::Vigenere *v;
     Playfair::Playfair pf;
     Gronsfeld::Gronsfeld *g;

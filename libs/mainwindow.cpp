@@ -195,22 +195,22 @@ void MainWindow::on_rom_key_clicked()
     }
     else
     {
-        ParsedPerm res = checkPermutationSyntax(this->ui->rk_le->text(), this->ui->rom_le->toPlainText());
-        if (res.result == BadSyntax)
+        Perms::ParsedPerm res = Perms::Perms::checkPermutationSyntax(this->ui->rk_le->text(), this->ui->rom_le->toPlainText());
+        if (res.result == Perms::PermType::BadSyntax)
         {
             QMessageBox::warning(this, "Ошибка", "Неправильный синтаксис перестановки!");
         }
-        else if (res.result == BadPerm)
+        else if (res.result == Perms::PermType::BadPerm)
         {
             QMessageBox::warning(this, "Ошибка", "Неправильная перестановка!");
         }
-        else if (res.result == LongPerm)
+        else if (res.result == Perms::PermType::LongPerm)
         {
             QMessageBox::warning(this, "Ошибка", "Перестановка слишком длинная!");
         }
-        else if (res.result == OK)
+        else if (res.result == Perms::PermType::OK)
         {
-            p = new Perms(res);
+            p = new Perms::Perms(res);
             this->ui->rem_le->setPlainText(p->encrypt(this->ui->rom_le->toPlainText()));
         }
     }
@@ -241,22 +241,22 @@ void MainWindow::on_rem_key_clicked()
     }
     else
     {
-        ParsedPerm res = checkPermutationSyntax(this->ui->rk_le->text(), this->ui->rem_le->toPlainText());
-        if (res.result == BadSyntax)
+        Perms::ParsedPerm res = Perms::Perms::checkPermutationSyntax(this->ui->rk_le->text(), this->ui->rem_le->toPlainText());
+        if (res.result == Perms::PermType::BadSyntax)
         {
             QMessageBox::warning(this, "Ошибка", "Неправильный синтаксис перестановки!");
         }
-        else if (res.result == BadPerm)
+        else if (res.result == Perms::PermType::BadPerm)
         {
             QMessageBox::warning(this, "Ошибка", "Неправильная перестановка!");
         }
-        else if (res.result == LongPerm)
+        else if (res.result == Perms::PermType::LongPerm)
         {
             QMessageBox::warning(this, "Ошибка", "Перестановка слишком длинная!");
         }
-        else if (res.result == OK)
+        else if (res.result == Perms::PermType::OK)
         {
-            p = new Perms(res);
+            p = new Perms::Perms(res);
             this->ui->rom_le->setPlainText(p->decrypt(this->ui->rem_le->toPlainText()));
         }
     }
