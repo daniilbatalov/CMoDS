@@ -17,9 +17,10 @@ private slots:
     void testGetRevQString();
     void testDecrypt();
     void testSwap();
+    void testGetRevPerm();
 
 private:
-    Perms *p;
+    Perms::Perms *p;
 
 };
 

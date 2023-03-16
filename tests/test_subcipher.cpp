@@ -19,5 +19,5 @@ void test_subcipher::testEncrypt()
 }
 
 
-QTEST_GUILESS_MAIN(test_subcipher)
+//QTEST_GUILESS_MAIN(test_subcipher)
 
