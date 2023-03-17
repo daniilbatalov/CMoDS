@@ -10,14 +10,14 @@ class tst_subcipher : public QObject
     Q_OBJECT
 
 public:
-    tst_subcipher(QObject *parent = nullptr);
+    tst_subcipher(QObject* parent = nullptr);
 
 public slots:
     void testConstructor();
     void testEncrypt();
 
 private:
-    SubCipher *s;
+    std::unique_ptr<SubCipher> s;
 };
 
-#endif // TST_SUBCIPHER_H
+#endif  // TST_SUBCIPHER_H
