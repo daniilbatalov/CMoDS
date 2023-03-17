@@ -7,7 +7,7 @@ Gronsfeld::Gronsfeld(const QVector<QString>& abc) { this->alphabet = abc; }
 
 void Gronsfeld::setKey(const QString& k) { this->key = k; }
 
-QString Gronsfeld::expand_key(const qsizetype size)
+QString Gronsfeld::expandKey(const qsizetype size)
 {
     QString temp_key = this->key;
     qsizetype fullstring_c = (size / key.size()) - 1;
@@ -22,7 +22,7 @@ QString Gronsfeld::expand_key(const qsizetype size)
 
 QString Gronsfeld::encrypt(const QString& message, qsizetype func(qsizetype, qsizetype))
 {
-    QString tmp_key = this->expand_key(message.length());
+    QString tmp_key = this->expandKey(message.length());
     QString res = "";
     qsizetype shift_k = 0;
     for (QString::const_iterator it = message.cbegin(); it != message.cend(); ++it)

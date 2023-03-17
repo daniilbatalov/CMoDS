@@ -5,7 +5,7 @@ namespace Vigenere
 
 Vigenere::Vigenere(const QVector<QString>& abc_value) { this->alphabet = abc_value; }
 
-QString Vigenere::expand_key(const qsizetype size)
+QString Vigenere::expandKey(const qsizetype size)
 {
     QString temp_key = this->key;
     qsizetype fullstring_c = (size / key.size()) - 1;
@@ -22,9 +22,9 @@ Vigenere::Vigenere() {}
 
 QString Vigenere::encrypt(const QString& message, qsizetype s_func(qsizetype, qsizetype, qsizetype))
 {
-    QString temp_key = expand_key(message.size());
+    QString temp_key = expandKey(message.size());
     QString result;
-    Alphabet abc = this->currentAbc;
+    Alphabet abc = this->current_abc;
     qsizetype shift = 0;
     for (qsizetype i = 0; i < temp_key.size(); ++i)
     {
@@ -54,9 +54,9 @@ void Vigenere::setRot(const Rot r) { this->mode = r; }
 
 void Vigenere::setKey(const QString& k) { this->key = k; }
 
-void Vigenere::setCurrentAbc(const Alphabet c) { this->currentAbc = c; }
+void Vigenere::setCurrentAbc(const Alphabet c) { this->current_abc = c; }
 
 void Vigenere::setKeyMode(const KeyMode k) { this->key_mode = k; }
 
-Alphabet Vigenere::getCurrentAbc() { return this->currentAbc; }
+Alphabet Vigenere::getCurrentAbc() { return this->current_abc; }
 }

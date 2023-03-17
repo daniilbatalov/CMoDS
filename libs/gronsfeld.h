@@ -31,7 +31,7 @@ private:
     QPair<QChar, bool> shift(const QChar c,
                              const qsizetype sh,
                              qsizetype func(qsizetype, qsizetype));
-    QString expand_key(const qsizetype size);
+    QString expandKey(const qsizetype size);
     QString key;
     KeyMode key_mode = KeyMode::GREEDY;
 };

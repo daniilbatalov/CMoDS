@@ -36,9 +36,9 @@ class Vigenere
 private:
     QString key;
     Rot mode = Rot::ROT_0;
-    QString expand_key(const qsizetype size);
+    QString expandKey(const qsizetype size);
     QVector<QString> alphabet;
-    Alphabet currentAbc = Alphabet::INVALID;
+    Alphabet current_abc = Alphabet::INVALID;
     KeyMode key_mode = KeyMode::GREEDY;
 
 public:
