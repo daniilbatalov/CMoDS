@@ -3,6 +3,7 @@
 #include "Subcipher/tst_subcipher.h"
 #include "Perms/tst_perms.h"
 #include "Gronsfeld/tst_gronsfeld.h"
+#include "MathAux/tst_mathaux.h"
 
 class tests : public QObject
 {
@@ -16,11 +17,13 @@ private slots:
     void test_subcipher();
     void test_perms();
     void test_gronsfeld();
+    void test_mathaux();
 
 private:
     std::unique_ptr<tst_subcipher> sub_ptr;
     std::unique_ptr<tst_perms> per_ptr;
     std::unique_ptr<tst_gronsfeld> grf_ptr;
+    std::unique_ptr<tst_mathaux> mth_ptr;
 };
 
 tests::tests()
@@ -54,6 +57,12 @@ void tests::test_gronsfeld()
     grf_ptr->testKey();
     grf_ptr->testEncrypt();
     grf_ptr->testDecrypt();
+}
+
+void tests::test_mathaux()
+{
+    mth_ptr->testInt();
+    mth_ptr->testLongLong();
 }
 
 QTEST_APPLESS_MAIN(tests)
