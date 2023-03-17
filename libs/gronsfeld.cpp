@@ -24,22 +24,24 @@ QString Gronsfeld::encrypt(const QString& message, qsizetype func(qsizetype, qsi
 {
     QString tmp_key = this->expand_key(message.length());
     QString res = "";
-    qsizetype shift = 0;
+    qsizetype shift_k = 0;
     for (QString::const_iterator it = message.cbegin(); it != message.cend(); ++it)
     {
         qsizetype curr_key
-            = static_cast<qsizetype>(tmp_key.mid(it - message.cbegin() - shift, 1).toInt());
-        QChar new_char = this->shift((*it), curr_key, func);
-        if (((*it) == new_char) && (this->key_mode == KeyMode::LAZY))
+            = static_cast<qsizetype>(tmp_key.mid(it - message.cbegin() - shift_k, 1).toInt());
+        QPair<QChar, bool> new_char = this->shift((*it), curr_key, func);
+        if ((!new_char.second) && (this->key_mode == KeyMode::LAZY))
         {
-            ++shift;
+            ++shift_k;
         }
-        res.append(new_char);
+        res.append(new_char.first);
     }
     return res;
 }
 
-QChar Gronsfeld::shift(const QChar c, const qsizetype sh, qsizetype func(qsizetype, qsizetype))
+QPair<QChar, bool> Gronsfeld::shift(const QChar c,
+                                    const qsizetype sh,
+                                    qsizetype func(qsizetype, qsizetype))
 {
     for (QVector<QString>::iterator it = this->alphabet.begin(); it != this->alphabet.end(); ++it)
     {
@@ -47,12 +49,18 @@ QChar Gronsfeld::shift(const QChar c, const qsizetype sh, qsizetype func(qsizety
         {
             qsizetype new_index = MathAux::euclidean_remainder<qsizetype>(
                 func((*it).indexOf(c), sh), (*it).length());
-            return (*it).at(new_index);
+            return QPair<QChar, bool>((*it).at(new_index), true);
         }
     }
-    return c;
+    return QPair<QChar, bool>(c, false);
 }
 
 void Gronsfeld::setKeyMode(const KeyMode k) { this->key_mode = k; }
+
+QString Gronsfeld::getKey() { return this->key; }
+
+KeyMode Gronsfeld::getKeyMode() { return this->key_mode; }
+
+QVector<QString> Gronsfeld::getAlphabets() { return this->alphabet; }
 
 }

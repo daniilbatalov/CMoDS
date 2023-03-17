@@ -22,10 +22,15 @@ public:
     QString encrypt(const QString& message, qsizetype func(qsizetype, qsizetype));
     void setKey(const QString& k);
     void setKeyMode(const KeyMode k);
+    QString getKey();
+    KeyMode getKeyMode();
+    QVector<QString> getAlphabets();
 
 private:
     QVector<QString> alphabet;
-    QChar shift(const QChar c, const qsizetype sh, qsizetype func(qsizetype, qsizetype));
+    QPair<QChar, bool> shift(const QChar c,
+                             const qsizetype sh,
+                             qsizetype func(qsizetype, qsizetype));
     QString expand_key(const qsizetype size);
     QString key;
     KeyMode key_mode = KeyMode::GREEDY;
