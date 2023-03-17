@@ -5,13 +5,13 @@
 
 namespace MathAux
 {
-    template <typename T>
-    T euclidean_remainder(T a, T b)
-    {
-        T r = a % b;
-        using std::abs;
-        return r >= 0 ? r : r + abs(b);
-    }
+template<typename T>
+T euclidean_remainder(T a, T b)
+{
+    T r = a % b;
+    using std::abs;
+    return r >= 0 ? r : r + abs(b);
+}
 }
 
-#endif // MATH_AUX_H
+#endif  // MATH_AUX_H

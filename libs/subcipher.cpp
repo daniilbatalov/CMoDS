@@ -1,11 +1,10 @@
 #include "subcipher.h"
 
-SubCipher::SubCipher(QVector<QString> const &abc)
-{
-     this->alphabets = abc;
-}
+SubCipher::SubCipher(QVector<QString> const& abc) { this->alphabets = abc; }
 
-QString SubCipher::encrypt(QString const &message, qsizetype s_func(qsizetype, qsizetype, qsizetype), qsizetype shift)
+QString SubCipher::encrypt(QString const& message,
+                           qsizetype s_func(qsizetype, qsizetype, qsizetype),
+                           qsizetype shift)
 {
     QVector<QString>::iterator it = this->alphabets.begin();
 
@@ -21,7 +20,4 @@ QString SubCipher::encrypt(QString const &message, qsizetype s_func(qsizetype, q
     return message;
 }
 
-QVector<QString> SubCipher::getAlphabets()
-{
-    return this->alphabets;
-}
+QVector<QString> SubCipher::getAlphabets() { return this->alphabets; }
