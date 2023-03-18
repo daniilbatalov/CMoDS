@@ -4,7 +4,7 @@ jobs:
   generate-badge:
     runs-on: macos-latest
     steps:
-      - name: Create Awesome Badge
+      - name: Create Qt Badge
         uses:  Schneegans/dynamic-badges-action@v1.6.0
         with:
           auth: ${{ secrets.GIST_SECRET }}
@@ -13,3 +13,12 @@ jobs:
           label: Qt
           message: 6.4.1
           color: brightgreen
+      - name: Create CMake Badge
+        uses:  Schneegans/dynamic-badges-action@v1.6.0
+        with:
+          auth: ${{ secrets.GIST_SECRET }}
+          gistID: a6f4b009d37f07b7b60a0c89c53cb0f7
+          filename: cmakev.json
+          label: CMake
+          message: 3.16
+          color: blue
