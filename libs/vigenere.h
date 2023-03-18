@@ -50,6 +50,7 @@ public:
     void setCurrentAbc(const Alphabet c);
     void setKeyMode(const KeyMode k);
     Alphabet getCurrentAbc();
+    QVector<QString> getAlphabets();
 };
 }
 #endif  // VIGENERE_H

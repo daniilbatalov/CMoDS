@@ -59,4 +59,6 @@ void Vigenere::setCurrentAbc(const Alphabet c) { this->current_abc = c; }
 void Vigenere::setKeyMode(const KeyMode k) { this->key_mode = k; }
 
 Alphabet Vigenere::getCurrentAbc() { return this->current_abc; }
+
+QVector<QString> Vigenere::getAlphabets() { return this->alphabet; }
 }
