@@ -40,6 +40,7 @@ jobs:
           echo $PERCENT
           
   generate-badge:
+    needs: install-qt
     runs-on: macos-latest
     steps:
       - name: Create Qt Badge
@@ -59,4 +60,13 @@ jobs:
           filename: cmakev.json
           label: CMake
           message: 3.16
+          color: blue
+      - name: Create coverage badge
+        uses:  Schneegans/dynamic-badges-action@v1.6.0
+        with:
+          auth: ${{ secrets.GIST_SECRET }}
+          gistID: 28e58807c82c4d18cfe7fa98e8618a7b
+          filename: cover.json
+          label: Coverage
+          message: $PERCENT
           color: blue
