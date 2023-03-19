@@ -68,5 +68,7 @@ jobs:
           gistID: 28e58807c82c4d18cfe7fa98e8618a7b
           filename: cover.json
           label: Coverage
-          message: $PERCENT
-          color: blue
+          message: ${{ env.PERCENT }}
+          valColorRange: ${{ env.PERCENT }}
+          maxColorRange: 100
+          minColorRange: 50
