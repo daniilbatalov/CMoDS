@@ -38,32 +38,27 @@ jobs:
           sh ../.github/workflows/get-lcov.sh && /Users/runner/work/CMoDS/CMoDS/build/tests/tests.app/Contents/MacOS/tests && sh /Users/runner/work/CMoDS/CMoDS/tests/run_coverage.sh
 
           echo "PERCENT=$(sed -n '/<td class="coverPerMed"/,/<\/td>/p' /Users/runner/work/CMoDS/CMoDS/coverage/html/index.html  | head -n 1 | grep -Eo '[+-]?[0-9]+([.][0-9]+)?' )" >> $GITHUB_ENV
-          
-  generate-badge:
-    needs: install-qt
-    runs-on: macos-latest
-    steps:
-      - name: Create Qt Badge
-        uses:  Schneegans/dynamic-badges-action@v1.6.0
-        with:
+       - name: Create Qt Badge
+         uses:  Schneegans/dynamic-badges-action@v1.6.0
+         with:
           auth: ${{ secrets.GIST_SECRET }}
           gistID: ae8c2bc1a7c8ee405589fe1b957d532b
           filename: cmods.json
           label: Qt
           message: 6.4.1
           color: brightgreen
-      - name: Create CMake Badge
-        uses:  Schneegans/dynamic-badges-action@v1.6.0
-        with:
+       - name: Create CMake Badge
+         uses:  Schneegans/dynamic-badges-action@v1.6.0
+         with:
           auth: ${{ secrets.GIST_SECRET }}
           gistID: a6f4b009d37f07b7b60a0c89c53cb0f7
           filename: cmakev.json
           label: CMake
           message: 3.16
           color: blue
-      - name: Create coverage badge
-        uses:  Schneegans/dynamic-badges-action@v1.6.0
-        with:
+       - name: Create coverage badge
+         uses:  Schneegans/dynamic-badges-action@v1.6.0
+         with:
           auth: ${{ secrets.GIST_SECRET }}
           gistID: 28e58807c82c4d18cfe7fa98e8618a7b
           filename: cover.json
