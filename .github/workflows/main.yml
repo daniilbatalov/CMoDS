@@ -36,8 +36,8 @@ jobs:
          # See https://cmake.org/cmake/help/latest/manual/ctest.1.html for more detail
          run: |
           sh ../.github/workflows/get-lcov.sh && /Users/runner/work/CMoDS/CMoDS/build/tests/tests.app/Contents/MacOS/tests && sh /Users/runner/work/CMoDS/CMoDS/tests/run_coverage.sh
-          PERCENT=$(sed -n '/<td class="coverPerMed"/,/<\/td>/p' /Users/runner/work/CMoDS/CMoDS/coverage/html/index.html  | head -n 1 | grep -Eo '[+-]?[0-9]+([.][0-9]+)?' )
-          echo $PERCENT
+
+          echo "PERCENT=$(sed -n '/<td class="coverPerMed"/,/<\/td>/p' /Users/runner/work/CMoDS/CMoDS/coverage/html/index.html  | head -n 1 | grep -Eo '[+-]?[0-9]+([.][0-9]+)?' )" >> $GITHUB_ENV
           
   generate-badge:
     needs: install-qt
@@ -68,5 +68,5 @@ jobs:
           gistID: 28e58807c82c4d18cfe7fa98e8618a7b
           filename: cover.json
           label: Coverage
-          message: $PERCENT
+          message: ${{ PERCENT }}
           color: blue
