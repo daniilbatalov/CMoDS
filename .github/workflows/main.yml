@@ -18,6 +18,7 @@ jobs:
           host: 'mac'
           target: 'desktop'
           arch: 'clang_64'
+          cache: true
        -  name: Check          
           run: ls -R /Users/runner/work/CMoDS/Qt/6.4.1/macos/lib/
   build:
