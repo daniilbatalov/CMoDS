@@ -8,7 +8,7 @@
 SCRIPT_DIR="$(dirname "$0")"
 echo $SCRIPT_DIR
 # SRC_DIR is the directory containing the .gcno files (%{buildDir} in Qt Creator)
-SRC_DIR="$SCRIPT_DIR/../../build/tests/CMakeFiles/tests.dir/__/libs"
+SRC_DIR="$SCRIPT_DIR/../build/tests/CMakeFiles/tests.dir/__/libs"
 echo $SRC_DIR
 # COV_DIR is the directory where the coverage results will be stored
 COV_DIR="$SCRIPT_DIR/../coverage"
